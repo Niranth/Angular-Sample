@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="myApp" lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,8 @@
 
 <title>Movie Browser</title>
 <script src="http://code.angularjs.org/1.2.20/angular.js"></script>
+<script
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
 <script src="js/search.js"></script>
 <link rel="shortcut icon" href="assets/images/gt_favicon.png">
 <link
@@ -23,9 +25,20 @@
 <!--[if lt IE 9]> <script src="assets/js/html5shiv.js"></script> <![endif]-->
 </head>
 
-<body ng-app="myApp" ng-controller="MovieController">
+<body ng-controller="mainController">
 
-	<!-- Header -->
+	<!--   <nav class="navbar navbar-default">
+    <div class="container">
+      
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#moviesbyname"><i class="fa fa-shield"></i> Movies</a></li>
+        <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+   -->
 	<header class="header">
 		<div class="container">
 			<div class="row">
@@ -33,144 +46,22 @@
 					<h1>SuperFast Movie Search</h1>
 					<h2>by Niranth Reddy</h2>
 					<p class="lead">Search Movie to know its Details and Ratings</p>
+					<nav class="navbar navbar-default">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+							<li><a href="#moviesbyname"><i class="fa fa-shield"></i> Movies</a></li>
+							<li><a href="#contact" style="margin-right: 20px;"><i class="fa fa-comment"></i> Contact</a></li>
+						</ul>
+					</nav>
 
-					<!-- 	<p>
-						SuperAwesome thing is currently in active development and will be
-						released this summer.<br> In the meantime, please register to
-						our waiting list to get notified first once something is launched.
-					</p>
-				 -->
-					<br>
 
-					<form class="form-inline" role="form">
-						<input type="text" ng-model="search"
-							ng-model-options="{ debounce: 800 }" onclick="select()"
-							class="form-control" placeholder="Enter full movie name"
-							autofocus />
-					</form>
-					<p class="small text-muted">Powered by OMDBapi</p>
 				</div>
 			</div>
 		</div>
 	</header>
-	<!-- /Header -->
 
 
-	<!-- Content -->
-	<main class="content">
-	<div ng-if="details.Response==='True'">
-		<!-- Features -->
-		<section class="container space-before">
-
-			<div class="row featurelist space-after">
-				<div class="col-md-5 col-sm-6 col-md-push-1 ">
-					<img class="img-feature img-responsive"
-						ng-src="{{ details.Poster=='N/A' ? 'http://placehold.it/150x220&text=N/A' : details.Poster }}"
-						class="thumbnail animated flip movie-poster" alt={{details.Title}}>
-				</div>
-				<div class="col-md-5 col-md-push-1 col-sm-6">
-					<h2 class="space-before">
-						<a href="http://imdb.com/title/{{ details.imdbID }}"
-							target="_blank">{{ details.Title }}</a>
-					</h2>
-					<p>
-						<span class="label label-primary">Released on :</span> {{
-						details.Released }} ({{ details.Runtime }})
-					</p>
-
-					<p>
-						<span class="label label-primary">Plot :</span> {{ details.Plot }}
-					</p>
-
-				</div>
-			</div>
-
-			<div class="row featurelist space-after">
-				<div class="col-md-5 col-sm-6 col-sm-push-6">
-					<img class="img-feature img-responsive"
-						src="assets/images/screen2.png" alt="Sample image">
-				</div>
-				<div class="col-md-5 col-sm-6 col-md-pull-4 col-sm-pull-6">
-					<h2 class="space-before">
-						Cast and Crew, <span class="text-muted">Ratings</span>
-					</h2>
-
-					<p class="outer-p">
-					<div class="inner-p">
-						<span class="label label-primary">Directors :</span> {{
-						details.Director }}
-					</div>
-					<div class="inner-p">
-						<span class="label label-primary">Actors :</span> {{
-						details.Actors }}
-					</div>
-					<div class="inner-p">
-						<span class="label label-primary">Genre :</span> {{ details.Genre
-						}}
-					</div>
-					</p>
-
-					<p class="outer-p-2">
-						Ratings: <br> <strong>IMDb Rating</strong>: <span
-							class="label label-success">{{ details.imdbRating }}</span> <br>
-						<strong>Rotten Tomatoes</strong>: <span
-							class="label label-success">{{ details.tomatoRating }}</span>
-					</p>
-
-					<p class="outer-p-3">
-						<a
-							ng-href="https://www.youtube.com/results?search_query={{ details.Title }}"
-							target="_blank" class="btn btn-default btn-xs btn-info">Watch
-							Trailers!</a> <span class="divider"></span> <a
-							ng-href="http://subscene.com/subtitles/title?q={{ details.Title }}"
-							target="_blank" class="btn btn-default btn-xs btn-info">Get
-							Subtitles!</a> <span class="divider"></span> <a
-							ng-href="http://www.theost.com/search/custom/?key={{ details.Title }}"
-							target="_blank" class="btn btn-default btn-xs btn-info">Hear
-							Soundtracks!</a> <span class="divider"></span> <a
-							ng-href="http://www.amazon.in/s/ref=nb_sb_noss_1?url=search-alias%3Ddvd&field-keywords={{ details.Title }}"
-							target="_blank" class="btn btn-default btn-xs btn-info">Buy
-							this movie!</a>
-					</p>
-				</div>
-			</div>
-
-			<div class="row featurelist space-after">
-				<div class="col-md-5 col-sm-6 col-md-push-1 col-sm-6">
-					<img class="img-feature img-responsive"
-						src="assets/images/screen3.png" alt="Sample image">
-				</div>
-				<div class="col-md-5 col-md-push-1 col-sm-6">
-					<h2 class="space-before">
-						Related results</span>
-					</h2>
-
-					<div id="related-results"
-						class="col-md-4 animated bounce related-results">
-						<div ng-if="related.Response!=='False'">
-
-							<ul class="rel-results" style="width: 500px">
-								<li ng-repeat="movie in related.Search"><a href="#"
-									id="{{ $index + 1 }}" ng-click="update(movie)">{{
-										movie.Title }}</a>, {{ movie.Year }}</li>
-							</ul>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</section>
-		<!-- /Features -->
-	</div>
-	</main>
-
-	<main class="content">
-	<div ng-if="details.Response==='False'">
-		<div class="container">
-			<i class="">No results found.</i>
-		</div>
-	</main>
-
+	<div ng-view></div>
 
 	<footer id="footer" class="jumbotron">
 		<section class="container">
