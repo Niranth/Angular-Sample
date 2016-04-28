@@ -1,18 +1,17 @@
 
 
 <div ng-controller="MovieController">
+
 	<!-- Header -->
-	
-		<header class="container">
+	<header class="container">
 		<br>
-					<form class="form-inline" role="form">
-						<strong>Enter Movie Name: </strong>
-						<input type="text" ng-model="search"
-							ng-model-options="{ debounce: 800 }" onclick="select()"
-							class="form-control" placeholder="Enter full movie name"
-							autofocus />
-					</form>
-		</header>
+		<form class="form-inline" role="form">
+			<strong>Enter Movie Name: </strong> <input type="text"
+				ng-model="search" ng-model-options="{ debounce: 800 }"
+				onclick="select()" class="form-control"
+				placeholder="Enter full movie name" autofocus />
+		</form>
+	</header>
 	<!-- /Header -->
 
 
@@ -110,9 +109,10 @@
 						<div ng-if="related.Response!=='False'">
 
 							<ul class="rel-results" style="width: 500px">
-								<li ng-repeat="movie in related.Search"><a href="#"
-									id="{{ $index + 1 }}" ng-click="update(movie)">{{
-										movie.Title }}</a>, {{ movie.Year }}</li>
+								<li ng-repeat="movie in related.Search"><a
+									href="#moviesbyname" id="{{ $index + 1 }}"
+									ng-click="update(movie)">{{ movie.Title }}</a>, {{ movie.Year
+									}}</li>
 							</ul>
 						</div>
 					</div>
@@ -133,6 +133,4 @@
 	</main>
 
 
-	</div>
-
-
+</div>
