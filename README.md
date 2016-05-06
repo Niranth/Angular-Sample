@@ -18,6 +18,7 @@ To get started, check out https://docs.angularjs.org/tutorial/step_07
 
 ## Features
 
+* Combined code from different internet sources
 * Created Using Bootstrap 3 and AngularJS
 * Responsive web design
 * Fully configurable
